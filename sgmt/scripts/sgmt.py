@@ -7,15 +7,8 @@ from dsapy import app
 from dsapy import flag
 
 import sgmt
-
-@flag.argroup('Options')
-def _options(parser):
-    return
-
-
-@app.main()
-def main(flags):
-    print(flags)
+import sgmt.cmd.cat
+import sgmt.cmd.set_ops
 
 
 def run():
