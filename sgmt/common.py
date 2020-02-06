@@ -14,7 +14,6 @@ _logger = logging.getLogger(__name__)
 
 
 ENCODING = locale.getpreferredencoding(False)
-ANCHOR = '^'
 
 
 @contextlib.contextmanager
@@ -36,6 +35,9 @@ def lazy(f):
         value = f(self)
         setattr(self, member_name, value)
         return value
+    def set(self, value):
+        setattr(self, member_name, value)
+    wrapper.set = set
     return wrapper
 
 
@@ -102,31 +104,3 @@ def as_dict(obj):
     if f is not None:
         return f()
     return dict(obj)
-
-
-def re_contains(strings):
-    def boundary(a):
-        if a:
-            return '\\b'
-        return ''
-
-    def make_re(s):
-        s, af = strip_prefix(ANCHOR, s)
-        s, ab = strip_suffix(ANCHOR, s)
-        return boundary(af) + re.escape(s) + boundary(ab)
-
-    return re.compile('(?:' +
-            '|'.join(make_re(s) for s in strings) +
-            ')')
-
-
-def strip_suffix(suffix, s):
-    if s.endswith(suffix):
-        return s[:len(s)-len(suffix)], True
-    return s, False
-
-
-def strip_prefix(prefix, s):
-    if s.startswith(prefix):
-        return s[len(prefix):], True
-    return s, False

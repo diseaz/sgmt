@@ -8,6 +8,7 @@ from dsapy import flag
 
 import sgmt
 import sgmt.cmd.cat
+import sgmt.cmd.graph_ops
 import sgmt.cmd.set_ops
 
 
