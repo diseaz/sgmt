@@ -22,7 +22,7 @@ class Row(common.Struct):
     def __init__(self, *args, **kw):
         super().__init__(*args, **kw)
 
-        for k, v in self.items():
+        for k, v in list(self.items()):
             if v is None or v == '':
                 del self[k]
 
